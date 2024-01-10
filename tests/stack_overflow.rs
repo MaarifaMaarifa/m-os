@@ -3,8 +3,8 @@
 #![feature(abi_x86_interrupt)]
 
 use core::panic::PanicInfo;
-use m_os::serial_print;
 use m_os::{exit_qemu, serial_println, QemuExitCode};
+use m_os::{hlt_loop, serial_print};
 
 use lazy_static::lazy_static;
 use x86_64::structures::idt::InterruptDescriptorTable;
@@ -53,7 +53,7 @@ extern "x86-interrupt" fn test_double_fault_handler(
 ) -> ! {
     serial_println!("[ok]");
     exit_qemu(QemuExitCode::Success);
-    loop {}
+    hlt_loop()
 }
 pub fn init_test_idt() {
     TEST_IDT.load();

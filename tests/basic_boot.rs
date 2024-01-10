@@ -5,13 +5,13 @@
 #![test_runner(m_os::test_runner)]
 
 use core::panic::PanicInfo;
-use m_os::println;
+use m_os::{hlt_loop, println};
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
     test_main();
 
-    loop {}
+    hlt_loop()
 }
 
 #[panic_handler]

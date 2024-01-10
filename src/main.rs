@@ -5,7 +5,7 @@
 #![reexport_test_harness_main = "test_main"]
 
 use core::panic::PanicInfo;
-use m_os::println;
+use m_os::{hlt_loop, println};
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
@@ -13,23 +13,16 @@ pub extern "C" fn _start() -> ! {
 
     m_os::init();
 
-    fn stack_overflow() {
-        stack_overflow(); // for each recursion, the return address is pushed
-    }
-
-    // trigger a stack overflow
-    stack_overflow();
-
     #[cfg(test)]
     test_main();
 
     println!("It did not crash!");
 
-    loop {}
+    hlt_loop()
 }
 
 // our existing panic handler
-#[cfg(not(test))] // new attribute
+#[cfg(not(test))]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
