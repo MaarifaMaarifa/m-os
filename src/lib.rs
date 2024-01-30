@@ -10,6 +10,7 @@ use bootloader::{entry_point, BootInfo};
 
 use core::panic::PanicInfo;
 
+pub mod allocator;
 pub mod gdt;
 pub mod interrupts;
 pub mod memory;
