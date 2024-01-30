@@ -21,5 +21,5 @@ fn should_fail() {
 fn panic(_info: &PanicInfo) -> ! {
     serial_println!("[ok]");
     exit_qemu(QemuExitCode::Success);
-    loop {}
+    hlt_loop()
 }

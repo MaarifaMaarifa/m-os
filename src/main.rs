@@ -4,11 +4,16 @@
 #![test_runner(m_os::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 
+use bootloader::{entry_point, BootInfo};
 use core::panic::PanicInfo;
 use m_os::{hlt_loop, println};
 
+entry_point!(kernel_main);
+
 #[no_mangle]
-pub extern "C" fn _start() -> ! {
+fn kernel_main(_boot_info: &'static BootInfo) -> ! {
+    // use m_os::memory::active_level_4_table;
+
     println!("Starting Mos...\n\n");
 
     m_os::init();
@@ -26,7 +31,7 @@ pub extern "C" fn _start() -> ! {
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
-    loop {}
+    hlt_loop()
 }
 
 #[cfg(test)]
